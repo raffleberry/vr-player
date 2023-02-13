@@ -3,6 +3,9 @@
 // var button = videojs.getComponent('Button');
 
 (function (window, videojs) {
+    var src =  localStorage.getItem('src');
+    document.querySelector('source').src = src ? src : '';
+
     var player = window.player = videojs('my-player', {
         fill: true,
         responsive: true,
@@ -13,6 +16,12 @@
     // AUTO is the default and looks at mediainfo
     var vr = window.vr = player.vr({ projection: 'AUTO', debug: true, forceCardboard: false });
 }(window, window.videojs));
+
+
+function changeSrc(src) {
+    localStorage.setItem('src', src);
+    location.reload();
+}
 
 function addControl3d() {
     var MenuButton = videojs.getComponent('MenuButton');
