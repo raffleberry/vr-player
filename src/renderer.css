@@ -1,7 +1,11 @@
-body {
-    width: 100vw;
-    height: 100vh;
+#my-player {
+  display: flex;
     margin: 0;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
 }
 
 .dropzone {
