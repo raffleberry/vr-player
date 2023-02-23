@@ -2,8 +2,18 @@
 // var player = videojs('my-player');
 // var button = videojs.getComponent('Button');
 
-var src = localStorage.getItem('src');
-document.querySelector('source').src = src ? src : '';
+(function loadVideo() {
+    var src = localStorage.getItem('src');
+    var title = localStorage.getItem('title');
+    if (src) {
+        document.querySelector('source').src = src;
+    } else {
+        document.querySelector('source') = '';
+    }
+    if (title) {
+        document.title = 'VR Player - ' + title;
+    }
+})()
 
 function isMobile() {
     var check = false;
@@ -51,3 +61,4 @@ function updateSize(player) {
         }
     });
 }(window, window.videojs));
+

@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 
 const createWindow = () => {
@@ -12,7 +12,7 @@ const createWindow = () => {
             preload: path.join(__dirname, 'src', 'preload.js'),
             nodeIntegration: true,
             contextIsolation: false,
-            enableRemoteModule: true,
+            enableRemoteModule: true
         }
     })
 
@@ -20,5 +20,8 @@ const createWindow = () => {
 }
 
 app.whenReady().then(() => {
+    ipcMain.on('get-file-data', function (event) {
+        event.returnValue = process.argv;
+    });
     createWindow()
 })
