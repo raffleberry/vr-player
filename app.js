@@ -1,5 +1,8 @@
-const {app, BrowserWindow, ipcMain} = require('electron')
+const {app, BrowserWindow, ipcMain, Menu} = require('electron')
 const path = require('path')
+const { MenuTemplate } = require('./src/menu')
+
+
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -15,6 +18,9 @@ const createWindow = () => {
             enableRemoteModule: true
         }
     })
+
+    const menu = Menu.buildFromTemplate(MenuTemplate(app.name, []))
+    Menu.setApplicationMenu(menu);
 
     win.loadFile(path.join(__dirname, 'src', 'index.html'))
 }
