@@ -1,5 +1,6 @@
 const { CON, DEF } = require("./defaults");
 const { Store } = require("./store");
+const { Windows } = require("./windows");
 
 const MenuTemplate = (recentFiles = []) => {
 
@@ -39,6 +40,10 @@ const MenuTemplate = (recentFiles = []) => {
         {
             label: 'Settings',
             submenu: [
+                {
+                    label: 'Plugin Settings',
+                    click: Windows.openPluginSettings
+                },
                 {
                     label: 'Toggle Dev Tools',
                     role: 'toggleDevTools'

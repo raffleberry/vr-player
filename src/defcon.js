@@ -1,3 +1,8 @@
+// DEFAULTS
+const DEF = {
+    plugin: 'videojs-panorama',
+}
+
 // CONSTANTS
 const CON = {
     plugin: 'plugin',
@@ -5,9 +10,11 @@ const CON = {
     pluginVjsVr: 'videojs-vr'
 }
 
-// DEFAULTS
-const DEF = {
-    plugin: 'videojs-panorama',
+// for use by renderer
+if (!module) {
+    var module = {
+        exports: 'meh'
+    }
 }
 
 module.exports = { DEF, CON }

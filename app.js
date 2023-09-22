@@ -20,9 +20,8 @@ const createWindow = () => {
     })
 
     const menu = Menu.buildFromTemplate(MenuTemplate([]))
-    Menu.setApplicationMenu(menu);
-
-    win.loadFile(path.join(__dirname, 'src', 'index.html'))
+    win.setMenu(menu)
+    win.loadFile(path.join(__dirname, 'src', 'app.html'))
 }
 
 app.whenReady().then(() => {
