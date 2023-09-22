@@ -1,8 +1,7 @@
 const {app, BrowserWindow, ipcMain, Menu} = require('electron')
 const path = require('path')
 const { MenuTemplate } = require('./src/menu')
-
-
+const { loadIPCs } = require('./src/ipc')
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -14,7 +13,6 @@ const createWindow = () => {
         webPreferences: {
             preload: path.join(__dirname, 'src', 'preload.js'),
             nodeIntegration: true,
-            contextIsolation: false,
             enableRemoteModule: true
         }
     })
@@ -25,8 +23,6 @@ const createWindow = () => {
 }
 
 app.whenReady().then(() => {
-    ipcMain.on('get-file-data', function (event) {
-        event.returnValue = process.argv;
-    });
+    loadIPCs()
     createWindow()
 })

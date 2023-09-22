@@ -12,6 +12,11 @@ const openPluginSettings = () => {
         resizable: false,
         minimizable: false,
         fullscreenable: false,
+        webPreferences: {
+            preload: path.join(__dirname, 'preload.js'),
+            nodeIntegration: true,
+            enableRemoteModule: true
+        }
     })
     Windows.settingsWindow.on('closed', () => {
         Windows.settingsWindow = null

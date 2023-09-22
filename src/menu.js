@@ -1,4 +1,4 @@
-const { CON, DEF } = require("./defaults");
+const { CON, DEF } = require("./defcon");
 const { Store } = require("./store");
 const { Windows } = require("./windows");
 

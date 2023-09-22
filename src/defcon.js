@@ -6,6 +6,9 @@ const DEF = {
 // CONSTANTS
 const CON = {
     plugin: 'plugin',
+    getStore: 'getStore',
+    currentFile: 'currentFile',
+    setStore: 'setStore',
     pluginVjsPanorama: 'videojs-panorama',
     pluginVjsVr: 'videojs-vr'
 }

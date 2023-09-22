@@ -1,28 +1,11 @@
-window.addEventListener('DOMContentLoaded', () => {
-    const replaceText = (selector, text) => {
-        const element = document.getElementById(selector)
-        if (element) 
-            element.innerText = text
-        
-    }
+const { ipcRenderer, contextBridge } = require('electron');
+const { CON } = require('./defcon');
+// https://www.electronjs.org/docs/latest/api/ipc-renderer
+// https://www.electronjs.org/docs/latest/api/ipc-main
 
-    for (const dependency of['chrome', 'node', 'electron']) {
-        replaceText(`${dependency}-version`, process.versions[dependency])
-    }
-})
+const api = {}
 
-function changeSrc(src) {
-    localStorage.setItem('src', src);
-    var fileName = require('path').parse(src).base;
-    localStorage.setItem('title', fileName);
-    location.reload();
-}
+api[CON.getStore] = (key) => ipcRenderer.invoke(CON.getStore, key)
+api[CON.setStore] = (key, val) => ipcRenderer.send(CON.setStore, key, val)
 
-const { ipcRenderer } = require('electron');
-
-const fileData = ipcRenderer.sendSync('get-file-data');
-
-if (fileData?.length >= 2) {
-    if (fileData[1] !== '.')
-        changeSrc(fileData[1]);
-}
+contextBridge.exposeInMainWorld("api", api);
