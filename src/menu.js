@@ -24,12 +24,6 @@ const MenuTemplate = (recentFiles = []) => {
             label: 'Plugins',
             submenu: [
                 {
-                    label: CON.pluginVjsPanorama,
-                    type: 'radio',
-                    click: () => Store.set(CON.plugin, CON.pluginVjsPanorama),
-                    checked: plugin == CON.pluginVjsPanorama
-                },
-                {
                     label: CON.pluginVjsVr,
                     type: 'radio',
                     click: () => Store.set(CON.plugin, CON.pluginVjsVr),

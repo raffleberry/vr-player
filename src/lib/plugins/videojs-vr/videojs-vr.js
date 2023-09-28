@@ -52105,11 +52105,14 @@
         _geometry.scale(-1, 1, 1);
 
         var _uvs = _geometry.faceVertexUvs[0];
-
         if (projection !== '180_MONO') {
           for (var _i2 = 0; _i2 < _uvs.length; _i2++) {
             for (var _j2 = 0; _j2 < 3; _j2++) {
               _uvs[_i2][_j2].x *= 0.5;
+              if (_i2 < _uvs.length/4) {
+                _uvs[_i2][_j2].x *= 0.5;
+                _uvs[_i2][_j2].y *= 0.2;
+              }
             }
           }
         }

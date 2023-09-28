@@ -1,3 +1,6 @@
+try {
+    require('electron-reloader')(module)
+  } catch (_) {}
 const {app, BrowserWindow, ipcMain, Menu} = require('electron')
 const path = require('path')
 const { MenuTemplate } = require('./src/menu')

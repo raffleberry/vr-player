@@ -42,23 +42,26 @@ function updateSize(player) {
         });
     });
     window.addEventListener("resize", () => updateSize(player));
-    var videoElement = document.getElementById("my-player");
     var width = window.innerWidth;
     var height = window.innerHeight;
     player.width(width),
     player.height(height);
-    player.panorama({
-        clickToToggle: (! isMobile()),
-        clickAndDrag: true,
-        autoMobileOrientation: true,
-        initFov: 100,
-        NoticeMessage: (isMobile()) ? "" : "",
-        videoType: 'VR1803D',
-        callback: function () {
-            if (! isMobile()) 
-                player.play();
-            
-        }
-    });
+
 }(window, window.videojs));
 
+const configure = () => {
+    var player = window.player;
+    // 180 sbs vr preset
+    player.vr({
+        projection: '180_LR',
+        debug: true,
+        sphereDetail: 32,
+        forceCardboard: true
+    });
+    addScrollToZoom();
+    console.log(player.vr().camera);
+    console.log(player.vr().scene);
+    console.log(player.vr().renderer);
+}
+
+configure();
