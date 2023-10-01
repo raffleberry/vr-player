@@ -5,6 +5,7 @@ const {app, BrowserWindow, ipcMain, Menu} = require('electron')
 const path = require('path')
 const { MenuTemplate } = require('./src/menu')
 const { loadIPCs } = require('./src/ipc')
+const { Windows } = require('./src/windows')
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -23,9 +24,11 @@ const createWindow = () => {
     const menu = Menu.buildFromTemplate(MenuTemplate([]))
     win.setMenu(menu)
     win.loadFile(path.join(__dirname, 'src', 'app.html'))
+    return win
 }
 
 app.whenReady().then(() => {
+    const win = createWindow()
+    Windows.mainWindow = win
     loadIPCs()
-    createWindow()
 })

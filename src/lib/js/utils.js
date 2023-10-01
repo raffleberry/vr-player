@@ -3,8 +3,6 @@ const fileName = (src) => {
     return src.split(/(\\|\/)/g).pop();
 };
 
-
-
 function loadVideo(src) {
     this.player.src(src);
     if (src) {

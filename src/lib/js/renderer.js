@@ -53,6 +53,11 @@ const configure = () => {
 
 configure();
 
+window.api[CON.applySettings]((v) => {
+    // apply new settings
+    console.log(v);
+});
+
 (async () => {
     const src = await api[CON.getStore](CON.currentFile);
     if (src) {

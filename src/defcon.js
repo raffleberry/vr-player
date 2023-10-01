@@ -5,6 +5,8 @@ const CON = {
     currentFile: 'currentFile',
     setStore: 'setStore',
     pluginVjsVr: 'videojs-vr',
+    settings: 'settings',
+    applySettings: 'applySettings',
 }
 
 // DEFAULTS
