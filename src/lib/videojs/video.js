@@ -29928,7 +29928,7 @@
     // locales and their language translations
     languages: {},
     // Default message to show when a video cannot be played.
-    notSupportedMessage: 'No compatible source was found for this media.',
+    notSupportedMessage: 'No compatible source was found',
     normalizeAutoplay: false,
     fullscreen: {
       options: {

@@ -17,8 +17,10 @@ function handleDrop(e) {
     e.preventDefault();
     hideDropZone();
     for (const f of e.dataTransfer.files) {
-        changeSrc(f.path);
-        break;
+        const res = loadVideo(f.path);
+        if (res) {
+            api[CON.setStore](CON.currentFile, f.path);
+        }
     }
     
 }

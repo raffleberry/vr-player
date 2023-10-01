@@ -1,11 +1,20 @@
 const fileName = (src) => {
+    if (!src) return '<unable to show>';
     return src.split(/(\\|\/)/g).pop();
 };
 
-function changeSrc(src) {
-    localStorage.setItem("src", src);
-    localStorage.setItem("title", fileName(src));
-    location.reload();
+
+
+function loadVideo(src) {
+    this.player.src(src);
+    if (src) {
+        const title = fileName(src);
+        if (title) {
+            document.title = 'VR Player - ' + title;
+        }
+        return true
+    }
+    return false;
 }
 
 const addScrollToZoom = () => {

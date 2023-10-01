@@ -2,19 +2,6 @@
 // var player = videojs('my-player');
 // var button = videojs.getComponent('Button');
 
-(function loadVideo() {
-    var src = localStorage.getItem('src');
-    var title = localStorage.getItem('title');
-    if (src) {
-        document.querySelector('source').src = src;
-    } else {
-        document.querySelector('source') = '';
-    }
-    if (title) {
-        document.title = 'VR Player - ' + title;
-    }
-})()
-
 function isMobile() {
     var check = false;
     (function (a) {
@@ -56,7 +43,7 @@ const configure = () => {
         projection: '180_LR',
         debug: true,
         sphereDetail: 32,
-        forceCardboard: true
+        // forceCardboard: true
     });
     addScrollToZoom();
     console.log(player.vr().camera);
@@ -65,3 +52,10 @@ const configure = () => {
 }
 
 configure();
+
+(async () => {
+    const src = await api[CON.getStore](CON.currentFile);
+    if (src) {
+        loadVideo(src);
+    }
+})()
