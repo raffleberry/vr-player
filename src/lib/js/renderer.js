@@ -36,31 +36,40 @@ function updateSize(player) {
 
 }(window, window.videojs));
 
-const configure = () => {
-    var player = window.player;
-    // 180 sbs vr preset
-    player.vr({
+// global state
+var scrollToZoom = false;
+
+const applySettings = (v) => {
+    console.log(v);
+    const s = {
         projection: '180_LR',
-        debug: true,
         sphereDetail: 32,
-        // forceCardboard: true
-    });
+        scrollToZoom: true, // TODO
+        resume: true, // TODO
+        autoplay: false, // TODO
+        debug: false,
+        ...v
+    }
     addScrollToZoom();
-    console.log(player.vr().camera);
-    console.log(player.vr().scene);
-    console.log(player.vr().renderer);
+    var player = window.player;
+    player.vr({
+        projection: s.projection,
+        debug: s.debug,
+        sphereDetail: s.sphereDetail,
+    })
 }
 
-configure();
-
 window.api[CON.applySettings]((v) => {
-    // apply new settings
-    console.log(v);
+    applySettings(v); // find better solution
+    location.reload();
 });
+
 
 (async () => {
     const src = await api[CON.getStore](CON.currentFile);
+    const v = await api[CON.getStore](CON.settings);
     if (src) {
         loadVideo(src);
+        applySettings(v);
     }
 })()

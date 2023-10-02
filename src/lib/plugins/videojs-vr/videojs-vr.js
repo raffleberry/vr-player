@@ -51471,7 +51471,7 @@
     video.crossOrigin = 'anonymous';
     return video.hasAttribute('crossorigin');
   }();
-  var validProjections = ['360', '360_LR', '360_TB', '360_CUBE', 'EAC', 'EAC_LR', 'NONE', 'AUTO', 'Sphere', 'Cube', 'equirectangular', '180', '180_LR', '180_MONO'];
+  var validProjections = ['360', '360_LR', '360_TB', '360_CUBE', 'EAC', 'EAC_LR', 'NONE', 'AUTO', 'Sphere', 'Cube', 'equirectangular', '180', '180_LR', '180_MONO', 'DUAL_FISHEYE'];
   var getInternalProjectionName = function getInternalProjectionName(projection) {
     if (!projection) {
       return;
@@ -52145,6 +52145,43 @@
 
         this.movieScreen.layers.set(2);
         this.scene.add(this.movieScreen);
+      } else if (projection === 'DUAL_FISHEYE') {
+        var _geometry = new SphereGeometry(256, this.options_.sphereDetail, this.options_.sphereDetail, 2 * Math.PI, Math.PI, Math.PI/2); // Left eye view
+
+        var vertex_shader = `
+        varying vec3 vNormal;
+        void main() {
+            vNormal = normal;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+        }`
+        var fragment_shader = `
+        uniform sampler2D tex;
+        varying vec3 vNormal;
+        void main() {
+            vec2 uv = normalize( vNormal ).xy * 0.5 + 0.5;
+            vec3 color = texture2D( tex, uv ).rgb;
+            if ( vNormal.z < - 0.85 ) color = vec3( 0.777, 0.74, 0.74 );
+            gl_FragColor = vec4( color, 1.0 );
+        }`
+
+        // _geometry.scale(-1, 1, 1);
+
+        const uniforms = {
+          "tex": { value: this.videoTexture }
+        };
+
+        this.movieGeometry = new BufferGeometry().fromGeometry(_geometry);
+        this.videoTexture.flipY = false
+        this.movieMaterial = new THREE.ShaderMaterial({
+          uniforms: uniforms,
+          vertexShader: vertex_shader,
+          fragmentShader: fragment_shader,
+          side: THREE.FrontSide
+        });
+        this.movieScreen = new Mesh(this.movieGeometry, this.movieMaterial); // display in left eye only
+
+        this.movieScreen.layers.set(1);
+        this.scene.add(this.movieScreen); // Right eye view
       } else if (projection === 'EAC' || projection === 'EAC_LR') {
         var makeScreen = function makeScreen(mapMatrix, scaleMatrix) {
           // "Continuity correction?": because of discontinuous faces and aliasing,
